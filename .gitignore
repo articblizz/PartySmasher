@@ -3,9 +3,9 @@ Thumbs.db
 ehthumbs.db
 
 # Ignore Unity Folders
-obj
-Temp
-Library
+Project\PlatformParty\obj
+Project\PlatformParty\Temp
+Project\PlatformParty\Library
 
 *.sln
 
