@@ -2,6 +2,11 @@
 Thumbs.db
 ehthumbs.db
 
+# Ignore Unity Folders
+obj/
+Temp/
+Library/
+
 # Folder config file
 Desktop.ini
 
