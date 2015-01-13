@@ -48,7 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\CameraPan.cs" />
      <Compile Include="Assets\Code\PlayerInput.cs" />
-     <None Include="Assets\highligh.shader" />
+     <None Include="Assets\Textures and Materials\highligh.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>A:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
