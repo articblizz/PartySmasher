@@ -11,21 +11,19 @@ public enum PlyInput
 
 public class PlayerInput : MonoBehaviour {
 
-
     public PlyInput inputType;
 
     public float Speed = 5;
+    public float KnockbackForce = 100;
+    public float Health = 100;
 
     public float JumpForce = 200;
     public LayerMask whatIsGround;
 
     bool isFacingRight = true;
-
-    Animator animator;
+    Text hpText;
 
     bool isOnGround;
-
-    public GameObject sword;
 
     float direction = 0;
 
@@ -33,14 +31,7 @@ public class PlayerInput : MonoBehaviour {
     float immortalTimer;
     public float ImmortalTime;
 
-    public float KnockbackForce = 100;
 
-
-    float damage = 10;
-
-    float health = 100;
-
-    Text hpText;
     Canvas uiCanvas;
 
     public float MaxVelocity = 10;
@@ -48,11 +39,13 @@ public class PlayerInput : MonoBehaviour {
 	void Start () {
         uiCanvas = GetComponentInChildren<Canvas>();
         hpText = GetComponentInChildren<Text>();
-        animator = GetComponentInChildren<Animator>();
+
 	}
 
     void FixedUpdate()
     {
+        hpText.text = Health.ToString();
+
         isOnGround = Physics.CheckCapsule(collider.bounds.center,new Vector3(collider.bounds.center.x,collider.bounds.min.y-0.1f,collider.bounds.center.z),0.18f, whatIsGround);
 
         if (direction < 0 && isFacingRight)
@@ -69,42 +62,10 @@ public class PlayerInput : MonoBehaviour {
             rigidbody.velocity = new Vector3(-MaxVelocity, rigidbody.velocity.y);
 
 
-        hpText.text = health.ToString();
     }
-
-
-    public void Hit(float dmg, Vector3 dir)
-    {
-        rigidbody.AddForce(dir * KnockbackForce);
-
-        health -= dmg;
-        if (health <= 0)
-            Destroy(gameObject);
-    }
-
-    public float hitDistance = 3;
-    float timer;
-    public float SlashCooldown;
 
     public float DoubleTapThingy = 0.5f;
     //int buttonCount = 0;
-
-    void Slash()
-    {
-        if (timer >= SlashCooldown)
-        {
-            timer = 0;
-            animator.SetTrigger("Slash");
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, hitDistance))
-            {
-                if (hit.collider.tag == "Player")
-                {
-                    hit.collider.GetComponent<PlayerInput>().Hit(damage, Vector3.Normalize(hit.transform.position - transform.position));
-                }
-            }
-        }
-    }
 
     void Flip()
     {
@@ -113,12 +74,19 @@ public class PlayerInput : MonoBehaviour {
         transform.RotateAround(transform.position, transform.up, 180f);
         uiCanvas.transform.RotateAround(transform.position, transform.up, 180f);
     }
+
+    public void Hit(float dmg, Vector3 dir)
+    {
+        rigidbody.AddForce(dir * KnockbackForce);
+
+        Health -= dmg;
+        if (Health <= 0)
+            Destroy(gameObject);
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
 
-        timer += Time.deltaTime;
         if (immortal)
         {
             immortalTimer += Time.deltaTime;
@@ -154,10 +122,7 @@ public class PlayerInput : MonoBehaviour {
                     rigidbody.AddForce(new Vector3(0, JumpForce));
                 }
 
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    Slash();
-                }
+
 
                 break;
 
@@ -175,8 +140,8 @@ public class PlayerInput : MonoBehaviour {
                     rigidbody.AddForce(new Vector3(0, JumpForce));
                 }
 
-                if (Input.GetKeyDown(KeyCode.RightControl))
-                    Slash();
+                //if (Input.GetKeyDown(KeyCode.RightControl))
+                //    Slash();
                 break;
         }
 
