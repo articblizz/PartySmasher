@@ -59,9 +59,13 @@ public class BobScript : MonoBehaviour {
                 dashTimer = 0;
             }
         }
-        else
+        else if(!isOffCooldown)
         {
             dashTimerTwo += Time.deltaTime;
+            if (dashTimerTwo >= 0.2f)
+                rigidbody.drag = 1;
+
+            print(rigidbody.drag);
             if (dashTimerTwo >= DashCooldown)
             {
                 isOffCooldown = true;
@@ -114,7 +118,7 @@ public class BobScript : MonoBehaviour {
     {
         if (!isOffCooldown)
             return;
-
+        rigidbody.drag = 0f;
         rigidbody.AddForce(new Vector3(DashForce * direction, 0));
 
         print("Dashes!");
