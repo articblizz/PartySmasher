@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CameraPan.cs">
+    <Files>
+      <File FileName="..\New Unity Project\Assets\Code\MegamanConroller.cs" Line="1" Column="1" />
+      <File FileName="..\New Unity Project\Assets\Code\CheckIfDead.cs" Line="1" Column="1" />
+      <File FileName="..\New Unity Project\Assets\Code\BackAndForth.cs" Line="1" Column="1" />
+      <File FileName="..\New Unity Project\Assets\Code\Fall.cs" Line="1" Column="1" />
+      <File FileName="..\New Unity Project\Assets\Code\BridgeScript.cs" Line="1" Column="1" />
+      <File FileName="..\New Unity Project\Assets\Code\DrawHUD.cs" Line="1" Column="1" />
+      <File FileName="Assets\CameraPan.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -18,6 +18,7 @@ public class DamageSmoke : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        characters = GameObject.FindGameObjectsWithTag("Player");
 	
 	}
 
