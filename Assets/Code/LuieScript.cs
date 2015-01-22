@@ -34,7 +34,8 @@ public class LuieScript : MonoBehaviour {
     bool isOffCooldown = true;
     
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
         Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
 
         timer += Time.deltaTime;
@@ -78,10 +79,6 @@ public class LuieScript : MonoBehaviour {
             {
                 HandleDash(-1);
             }
-        }
-        else
-        {
-
         }
 
 
