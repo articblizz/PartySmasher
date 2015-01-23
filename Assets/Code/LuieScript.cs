@@ -10,6 +10,10 @@ public class LuieScript : MonoBehaviour {
     Animator animator;
     public KeyCode ThrowKey;
 
+    public GameObject BombPref;
+
+    public int MaxBombs = 2;
+
     // Use this for initialization
     void Start ()
     {
@@ -119,18 +123,11 @@ public class LuieScript : MonoBehaviour {
 
     void Throw()
     {
-        if (timer >= ThrowCooldown)
+        if (timer >= ThrowCooldown && GameObject.FindGameObjectsWithTag("Bomb").Length < MaxBombs)
         {
             timer = 0;
             animator.SetTrigger("Throw");
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, hitDistance))
-            {
-                if (hit.collider.tag == "Player")
-                {
-                    hit.collider.GetComponent<PlayerInput>().Hit(damage, Vector3.Normalize(hit.transform.position - transform.position));
-                }
-            }
+            GameObject.Instantiate(BombPref, gameObject.rigidbody.position, Quaternion.identity);
         }
     }
 }
