@@ -46,12 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CameraPan.cs" />
      <Compile Include="Assets\Code\BobScript.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\Code\BombScript.cs" />
+=======
+     <Compile Include="Assets\Code\CameraPan.cs" />
+     <Compile Include="Assets\Code\DamageSmoke.cs" />
+>>>>>>> origin/master
      <Compile Include="Assets\Code\LuieScript.cs" />
      <Compile Include="Assets\Code\PlayerInput.cs" />
-     <Compile Include="Assets\DamageSmoke.cs" />
      <None Include="Assets\Textures and Materials\highligh.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>

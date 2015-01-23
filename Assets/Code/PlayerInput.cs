@@ -80,8 +80,11 @@ public class PlayerInput : MonoBehaviour {
 		rigidbody.AddForce(dir * KnockbackForce);
 
 		Health -= dmg;
-		if (Health <= 0)
-			Destroy(gameObject);
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+            //Camera.main.GetComponent<CameraPan>().Recalc();
+        }
 	}
 	
 	// Update is called once per frame
