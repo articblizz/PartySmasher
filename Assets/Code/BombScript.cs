@@ -49,5 +49,6 @@ public class BombScript : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(gameObject.rigidbody.position, ExplosionRadius);
+        Gizmos.DrawFrustum(gameObject.rigidbody.position, 5, 5, 5, 5);
     }
 }

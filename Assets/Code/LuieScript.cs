@@ -77,14 +77,14 @@ public class LuieScript : MonoBehaviour {
             }
         }
 
-        if (Controls == PlyControls.ARROWS)
+        if (Controls == PlyControls.WASD)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 direction = 1;
                 HandleDash(direction);
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (Input.GetKeyDown(KeyCode.A))
             {
                 direction = -1;
                 HandleDash(direction);
