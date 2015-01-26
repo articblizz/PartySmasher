@@ -5,21 +5,35 @@ using UnityEngine.UI;
 public class LuieScript : MonoBehaviour {
 
     public PlyControls Controls;
-
-    float damage = 10;
-    Animator animator;
     public KeyCode ThrowKey;
-
     public GameObject BombPref;
 
+    public float ThrowForceX = 10;
+    public float ThrowForceY = 5;
     public int MaxBombs = 2;
 
-    // Use this for initialization
+    public float DashTiming = 0.5f;
+    public float DashCooldown = 3;
+    public float DashForce = 100;
+    public float hitDistance = 3;
+    public float ThrowCooldown;
+
+    Animator animator;
+
+    int direction = 1;
+    int lastDirection = 0;
+
+    float damage = 10;
+    float dashTimer;
+    float dashTimerTwo;
+    float throwTimer;
+
+    bool readyToDash = false;
+    bool isOffCooldown = true;
+
     void Start ()
     {
-
         animator = GetComponentInChildren<Animator>();
-
     }
 
 
@@ -28,21 +42,12 @@ public class LuieScript : MonoBehaviour {
     {
 
     }
-
-    float dashTimer;
-    float dashTimerTwo;
-    public float DashTiming = 0.5f;
-    public float DashCooldown = 3;
-    public float DashForce = 100;
-    bool readyToDash = false;
-    bool isOffCooldown = true;
     
-    // Update is called once per frame
     void Update ()
     {
         Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
 
-        timer += Time.deltaTime;
+        throwTimer += Time.deltaTime;
 
         if (Input.GetKey(ThrowKey))
         {
@@ -72,24 +77,21 @@ public class LuieScript : MonoBehaviour {
             }
         }
 
-
-        if (Controls == PlyControls.ARROWS)
+        if (Controls == PlyControls.WASD)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.D))
             {
-                HandleDash(1);
+                direction = 1;
+                HandleDash(direction);
             }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            else if (Input.GetKeyDown(KeyCode.A))
             {
-                HandleDash(-1);
+                direction = -1;
+                HandleDash(direction);
             }
         }
-
-
-
     }
 
-    int lastDirection = 0;
     void HandleDash(int d)
     {
         if (!readyToDash)
@@ -103,11 +105,6 @@ public class LuieScript : MonoBehaviour {
             Dash(d);
         }
     }
-
-    public float hitDistance = 3;
-    float timer;
-    public float ThrowCooldown;
-
 
     void Dash(int direction)
     {
@@ -123,11 +120,16 @@ public class LuieScript : MonoBehaviour {
 
     void Throw()
     {
-        if (timer >= ThrowCooldown && GameObject.FindGameObjectsWithTag("Bomb").Length < MaxBombs)
+        if (throwTimer >= ThrowCooldown && GameObject.FindGameObjectsWithTag("Bomb").Length < MaxBombs)
         {
-            timer = 0;
+            throwTimer = 0;
             animator.SetTrigger("Throw");
-            GameObject.Instantiate(BombPref, gameObject.rigidbody.position, Quaternion.identity);
+            GameObject bomb = (GameObject)Instantiate(BombPref, new Vector3(transform.rigidbody.position.x + .8f * transform.right.x, transform.rigidbody.position.y, transform.rigidbody.position.z), Quaternion.identity);
+            float[] array = new float[3];
+            array[0] = gameObject.transform.right.x;
+            array[1] = ThrowForceX;
+            array[2] = ThrowForceY;
+            bomb.SendMessage("Throw", array);
         }
     }
 }

@@ -1,34 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum forceMode
+{
+    Acceleration,
+    Force,
+    Impulse,
+    VelocityChange
+}
+
 public class BombScript : MonoBehaviour
 {
-    public float BlowTimer = 5;
-    public float ForceX = 100;
-    public float ForceY = 50;
+    public float BlowUpTimer = 5;
 
-	void Start ()
+    public float ExplosionForce = 10;
+    public float ExplosionRadius = 10;
+    public float UpwardForce = 1;
+    public forceMode Force_Mode = forceMode.Impulse;
+
+	void Throw (float[] array)
     {
-        gameObject.rigidbody.AddForce(ForceX, ForceY, 0, ForceMode.Impulse);
+        gameObject.rigidbody.AddForce(array[1] * array[0], array[2], 0, ForceMode.Impulse);
 	}
 
 	void Update ()
     {
-        BlowTimer -= Time.deltaTime;
+        BlowUpTimer -= Time.deltaTime;
 
-        if (BlowTimer <= 0)
+        if (BlowUpTimer <= 0)
             Explode();
 	}
 
-    void OnCollision(Collider col)
+    void Explode()
     {
-        if(col.collider.tag == "Player")
+        Collider[] colliders = Physics.OverlapSphere(gameObject.rigidbody.position, ExplosionRadius);
+
+        foreach (Collider col in colliders)
         {
+            if (col.rigidbody == null) continue;
+
+            col.rigidbody.AddExplosionForce(ExplosionForce, gameObject.rigidbody.position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);
+
+            Debug.Log("BOOM");
+            DestroyObject(gameObject);
         }
     }
 
-    void Explode()
+    void OnDrawGizmos()
     {
-        DestroyObject(gameObject);
+        Gizmos.DrawWireSphere(gameObject.rigidbody.position, ExplosionRadius);
+        Gizmos.DrawFrustum(gameObject.rigidbody.position, 5, 5, 5, 5);
     }
 }
