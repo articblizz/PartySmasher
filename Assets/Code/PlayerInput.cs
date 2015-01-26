@@ -4,152 +4,151 @@ using UnityEngine.UI;
 
 public enum PlyInput
 {
-	Player1 = 0,
-	Player2 = 1
+    Player1 = 0,
+    Player2 = 1
 }
 
 
 public class PlayerInput : MonoBehaviour {
 
-	public PlyInput inputType;
+    public PlyInput inputType;
 
-	public float Speed = 5;
-	public float KnockbackForce = 100;
-	public float Health = 100;
+    public float Speed = 5;
+    public float KnockbackForce = 100;
+    public float Health = 100;
 
-	public float JumpForce = 200;
-	public LayerMask whatIsGround;
+    public int lives = 3;
 
-	bool isFacingRight = true;
-	Text hpText;
+    public float JumpForce = 200;
+    public LayerMask whatIsGround;
 
-	bool isOnGround;
+    bool isFacingRight = true;
+    Text hpText;
 
-	float direction = 0;
+    bool isOnGround;
 
-	bool immortal = false;
-	float immortalTimer;
-	public float ImmortalTime;
+    float direction = 0;
 
-
-	Canvas uiCanvas;
-
-	public float MaxVelocity = 10;
-
-	void Start () {
-		uiCanvas = GetComponentInChildren<Canvas>();
-		hpText = GetComponentInChildren<Text>();
-
-	}
-
-	void FixedUpdate()
-	{
-		hpText.text = string.Format("{0:0}", Health);
-
-		isOnGround = Physics.CheckCapsule(collider.bounds.center,new Vector3(collider.bounds.center.x,collider.bounds.min.y-0.1f,collider.bounds.center.z),0.18f, whatIsGround);
-
-		if (direction < 0 && isFacingRight)
-			Flip();
-		else if (direction > 0 && !isFacingRight)
-			Flip();
-
-		//rigidbody.velocity = new Vector3(Speed * direction, rigidbody.velocity.y);
-		rigidbody.AddForce(new Vector3(Speed * direction, 0));
-
-		if(rigidbody.velocity.x >= MaxVelocity)
-			rigidbody.velocity = new Vector3(MaxVelocity, rigidbody.velocity.y);
-		else if(rigidbody.velocity.x <= -MaxVelocity)
-			rigidbody.velocity = new Vector3(-MaxVelocity, rigidbody.velocity.y);
+    bool immortal = false;
+    float immortalTimer;
+    public float ImmortalTime;
 
 
-	}
+    Canvas uiCanvas;
 
-	public float DoubleTapThingy = 0.5f;
-	//int buttonCount = 0;
+    public float MaxVelocity = 10;
 
-	void Flip()
-	{
-		isFacingRight = !isFacingRight;
+    void Start () {
+        uiCanvas = GetComponentInChildren<Canvas>();
+        hpText = GetComponentInChildren<Text>();
 
-		transform.RotateAround(transform.position, transform.up, 180f);
-		uiCanvas.transform.RotateAround(transform.position, transform.up, 180f);
-	}
+    }
 
-	public void Hit(float dmg, Vector3 dir)
-	{
-		rigidbody.AddForce(dir * KnockbackForce);
+    void FixedUpdate()
+    {
+        hpText.text = string.Format("{0:0}", Health);
 
-		Health -= dmg;
+        isOnGround = Physics.CheckCapsule(collider.bounds.center,new Vector3(collider.bounds.center.x,collider.bounds.min.y-0.1f,collider.bounds.center.z),0.18f, whatIsGround);
+
+        if (direction < 0 && isFacingRight)
+            Flip();
+        else if (direction > 0 && !isFacingRight)
+            Flip();
+
+        rigidbody.AddForce(new Vector3(Speed * direction, 0));
+
+        if(rigidbody.velocity.x >= MaxVelocity)
+            rigidbody.velocity = new Vector3(MaxVelocity, rigidbody.velocity.y);
+        else if(rigidbody.velocity.x <= -MaxVelocity)
+            rigidbody.velocity = new Vector3(-MaxVelocity, rigidbody.velocity.y);
+    }
+
+    public float DoubleTapThingy = 0.5f;
+
+    void Flip()
+    {
+        isFacingRight = !isFacingRight;
+
+        transform.RotateAround(transform.position, transform.up, 180f);
+        uiCanvas.transform.RotateAround(transform.position, transform.up, 180f);
+    }
+
+    public void Hit(float dmg, Vector3 dir)
+    {
+        rigidbody.AddForce(dir * KnockbackForce);
+
+        Health -= dmg;
         if (Health <= 0)
         {
-            Destroy(gameObject);
-            //Camera.main.GetComponent<CameraPan>().Recalc();
+            lives--;
+            if (lives < 0)
+                Destroy(gameObject);
+            else
+            {
+                Health = 100;
+                rigidbody.MovePosition(new Vector3(0, 12, 0));
+            }
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+    
+    // Update is called once per frame
+    void Update () {
 
-		if (immortal)
-		{
-			immortalTimer += Time.deltaTime;
-			if (immortalTimer >= ImmortalTime)
-			{
-				immortal = false;
-				immortalTimer = 0;
-			}
-		}
+        if (immortal)
+        {
+            immortalTimer += Time.deltaTime;
+            if (immortalTimer >= ImmortalTime)
+            {
+                immortal = false;
+                immortalTimer = 0;
+            }
+        }
 
-		//var pos = transform.position;
-		switch (inputType)
-		{
+        switch (inputType)
+        {
 
-			case PlyInput.Player1:
+            case PlyInput.Player1:
 
-				if (Input.GetKey(KeyCode.D))
-				{
-					direction = 1;
+                if (Input.GetKey(KeyCode.D))
+                {
+                    direction = 1;
 
-				}
-				else if (Input.GetKey(KeyCode.A))
-				{
-					direction = -1;
-				}
-				else
-					direction = 0;
-
-
-
-				if (isOnGround && Input.GetKeyDown(KeyCode.W))
-				{
-					rigidbody.AddForce(new Vector3(0, JumpForce));
-				}
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    direction = -1;
+                }
+                else
+                    direction = 0;
 
 
 
-				break;
+                if (isOnGround && Input.GetKeyDown(KeyCode.W))
+                {
+                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                }
 
-			case PlyInput.Player2:
+                break;
 
-				if (Input.GetKey(KeyCode.RightArrow))
-					direction = 1;
-				else if (Input.GetKey(KeyCode.LeftArrow))
-					direction = -1;
-				else
-					direction = 0;
+            case PlyInput.Player2:
 
-				if (isOnGround && Input.GetKeyDown(KeyCode.UpArrow))
-				{
-					rigidbody.AddForce(new Vector3(0, JumpForce));
-				}
+                if (Input.GetKey(KeyCode.RightArrow))
+                    direction = 1;
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                    direction = -1;
+                else
+                    direction = 0;
 
-				//if (Input.GetKeyDown(KeyCode.RightControl))
-				//    Slash();
-				break;
-		}
+                if (isOnGround && Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                }
+
+                break;
+        }
 
 
 
-	
-	}
+    
+    }
 }
