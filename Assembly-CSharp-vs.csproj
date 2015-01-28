@@ -74,7 +74,7 @@
      <Compile Include="Assets\Code\DamageSmoke.cs" />
      <Compile Include="Assets\Code\LuieScript.cs" />
      <Compile Include="Assets\Code\PlayerInput.cs" />
-     <Compile Include="Assets\ScoreSys.cs" />
+     <Compile Include="Assets\Code\ScoreSys.cs" />
      <None Include="Assets\Asian Far East Environment\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Asian Far East Environment\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Asian Far East Environment\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
