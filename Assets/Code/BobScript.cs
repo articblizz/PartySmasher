@@ -65,7 +65,7 @@ public class BobScript : MonoBehaviour {
             if (dashTimerTwo >= 0.2f)
                 rigidbody.drag = 1;
 
-            print(rigidbody.drag);
+            //print(rigidbody.drag);
             if (dashTimerTwo >= DashCooldown)
             {
                 isOffCooldown = true;

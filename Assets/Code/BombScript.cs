@@ -41,7 +41,7 @@ public class BombScript : MonoBehaviour
 
             col.rigidbody.AddExplosionForce(ExplosionForce, gameObject.rigidbody.position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);
 
-            Debug.Log("BOOM");
+            //Debug.Log("BOOM");
             DestroyObject(gameObject);
         }
     }
