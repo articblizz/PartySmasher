@@ -90,6 +90,22 @@ public class PlayerInput : MonoBehaviour {
             }
         }
     }
+
+    public void BombHit(float dmg)
+    {
+        Health -= dmg;
+        if (Health <= 0)
+        {
+            lives--;
+            if (lives < 0)
+                Destroy(gameObject);
+            else
+            {
+                Health = 100;
+                rigidbody.MovePosition(new Vector3(0, 12, 0));
+            }
+        }
+    }
     
     // Update is called once per frame
     void Update () {

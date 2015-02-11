@@ -39,6 +39,11 @@ public class BombScript : MonoBehaviour
         {
             if (col.rigidbody == null) continue;
 
+            if (col.tag == "Player")
+            {
+                col.gameObject.SendMessage("BombHit", 13);
+            }
+
             col.rigidbody.AddExplosionForce(ExplosionForce, gameObject.rigidbody.position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);
 
             //Debug.Log("BOOM");
