@@ -2,12 +2,20 @@
 using System.Collections;
 using UnityEngine.UI;
 
+public enum PlyInput
+{
+    Player1 = 0,
+    Player2 = 1
+}
+
 public class PlayerInputV2 : MonoBehaviour {
 
     [Header("Player Input Attributes")]
     public float Speed = 5;
     public float KnockbackForce = 100;
     public float Health = 100;
+
+    public PlyInput inputType;
 
     public int lives = 3;
 
@@ -28,7 +36,7 @@ public class PlayerInputV2 : MonoBehaviour {
 
     Canvas uiCanvas;
 
-    bool isStunned = false;
+    protected bool isStunned = false;
 
     public float MaxVelocity = 10;
 
@@ -45,12 +53,15 @@ public class PlayerInputV2 : MonoBehaviour {
         isOnGround = Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x, collider.bounds.min.y - 0.1f, collider.bounds.center.z), 0.18f, whatIsGround);
         //print(isOnGround);
 
-        if (direction < 0 && isFacingRight)
-            Flip();
-        else if (direction > 0 && !isFacingRight)
-            Flip();
+        if (!isStunned)
+        {
+            if (direction < 0 && isFacingRight)
+                Flip();
+            else if (direction > 0 && !isFacingRight)
+                Flip();
+        }
 
-        if(direction != 0 && !isStunned)
+        if(!isStunned)
             rigidbody.velocity = new Vector3(Speed * direction, rigidbody.velocity.y);
 
         if (rigidbody.velocity.x >= MaxVelocity)
@@ -79,9 +90,43 @@ public class PlayerInputV2 : MonoBehaviour {
 
         direction = Input.GetAxis("Horizontal");
 
-        if (isOnGround && Input.GetKeyDown(KeyCode.W))
+        switch (inputType)
         {
-            rigidbody.AddForce(new Vector3(0, JumpForce));
+            case PlyInput.Player1:
+                if (Input.GetKey(KeyCode.A))
+                {
+                    direction = -1;
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    direction = 1;
+                }
+                else
+                    direction = 0;
+
+                if (Input.GetKeyDown(KeyCode.W) && isOnGround)
+                {
+                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                }
+                break;
+            case PlyInput.Player2:
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    direction = -1;
+                }
+                else if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    direction = 1;
+                }
+                else
+                    direction = 0;
+
+                if (Input.GetKeyDown(KeyCode.UpArrow) && isOnGround)
+                {
+                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                }
+                
+                break;
         }
 
         if (rigidbody.velocity.y > 1)
