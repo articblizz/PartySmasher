@@ -43,14 +43,8 @@ public class BobScript : PlayerInputV2 {
 
         if (isDashing)
         {
-            if (rigidbody.velocity.x < 0)
-            {
-                rigidbody.velocity = new Vector3(rigidbody.velocity.x - DashSpeed, rigidbody.velocity.y);
-            }
-            else
-            {
-                rigidbody.velocity = new Vector3(rigidbody.velocity.x + DashSpeed, rigidbody.velocity.y);
-            }
+            rigidbody.velocity = new Vector3(rigidbody.velocity.x + (lastDirection * DashSpeed), rigidbody.velocity.y);
+
         }
     }
     
@@ -59,9 +53,6 @@ public class BobScript : PlayerInputV2 {
         timer += Time.deltaTime;
 
         base.DaUpdate();
-
-
-
 
         if (timer >= 0.2f)
             sword.isPunching = false;
@@ -127,7 +118,7 @@ public class BobScript : PlayerInputV2 {
             //print("Ready!");
             readyToDash = true;
         }
-        else if (isOffCooldown && d == lastDirection)
+        else if (isOffCooldown && d == lastDirection && !isStunned)
         {
             Dash(d);
         }

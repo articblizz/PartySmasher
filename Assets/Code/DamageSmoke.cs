@@ -6,7 +6,7 @@ public class DamageSmoke : MonoBehaviour {
 	GameObject[] characters;
 	float[] keepTrackOfDmg;
 
-    public float DmgPerTick = 0.4f;
+	public float DmgPerTick = 0.4f;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +18,7 @@ public class DamageSmoke : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        characters = GameObject.FindGameObjectsWithTag("Player");
+		characters = GameObject.FindGameObjectsWithTag("Player");
 	
 	}
 

@@ -2,11 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public enum PlyInput
-{
-    Player1 = 0,
-    Player2 = 1
-}
+
 
 
 public class PlayerInput : MonoBehaviour {
