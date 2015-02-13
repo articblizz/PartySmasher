@@ -42,6 +42,7 @@ public class PlayerInput : MonoBehaviour {
         uiCanvas = GetComponentInChildren<Canvas>();
         hpText = GetComponentInChildren<Text>();
 
+
     }
 
     void FixedUpdate()
@@ -106,7 +107,6 @@ public class PlayerInput : MonoBehaviour {
 
         switch (inputType)
         {
-
             case PlyInput.Player1:
 
                 if (Input.GetKey(KeyCode.D))

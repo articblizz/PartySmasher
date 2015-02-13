@@ -9,27 +9,25 @@ public enum PlyControls
     ARROWS
 }
 
-public class BobScript : MonoBehaviour {
+public class BobScript : PlayerInputV2 {
 
+    [Header("Bobscript Attributes")]
     public PlyControls Controls;
 
     float damage = 10;
     Animator animator;
     public KeyCode SlashKey;
 
+    public SwordHit sword;
+
     // Use this for initialization
     void Start () {
 
         animator = GetComponentInChildren<Animator>();
-
+        DaStart();
     }
 
-
-
-    void FixedUpdate()
-    {
-
-    }
+    public float DashSpeed = 5;
 
     float dashTimer;
     float dashTimerTwo;
@@ -38,17 +36,43 @@ public class BobScript : MonoBehaviour {
     public float DashForce = 100;
     bool readyToDash = false;
     bool isOffCooldown = true;
+
+    void FixedUpdate()
+    {
+        base.DaFixed();
+
+        if (isDashing)
+        {
+            if (rigidbody.velocity.x < 0)
+            {
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x - DashSpeed, rigidbody.velocity.y);
+            }
+            else
+            {
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x + DashSpeed, rigidbody.velocity.y);
+            }
+            //print(rigidbody.velocity.x);
+        }
+    }
     
     // Update is called once per frame
     void Update () {
-        Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
+
+        base.DaUpdate();
+
+        //Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
 
         timer += Time.deltaTime;
+
+        if (timer >= 0.2f)
+            sword.isPunching = false;
 
         if (Input.GetKey(SlashKey))
         {
             Slash();
         }
+
+
 
         if (readyToDash && isOffCooldown)
         {
@@ -89,10 +113,9 @@ public class BobScript : MonoBehaviour {
         {
 
         }
-
-
-
     }
+
+    bool isDashing = false;
 
     int lastDirection = 0;
     void HandleDash(int d)
@@ -113,13 +136,13 @@ public class BobScript : MonoBehaviour {
     float timer;
     public float SlashCooldown;
 
-
     void Dash(int direction)
     {
         if (!isOffCooldown)
             return;
-        rigidbody.drag = 0f;
-        rigidbody.AddForce(new Vector3(DashForce * direction, 0));
+        isDashing = true;
+        //rigidbody.drag = 0f;
+        //rigidbody.AddForce(new Vector3(DashForce * direction, 0));
 
         print("Dashes!");
         isOffCooldown = false;
@@ -132,14 +155,15 @@ public class BobScript : MonoBehaviour {
         {
             timer = 0;
             animator.SetTrigger("Slash");
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, hitDistance))
-            {
-                if (hit.collider.tag == "Player")
-                {
-                    hit.collider.GetComponent<PlayerInput>().Hit(damage, Vector3.Normalize(hit.transform.position - transform.position));
-                }
-            }
+            sword.isPunching = true;
+            
+            //RaycastHit hit;
+            //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, hitDistance))
+            //{
+            //    if (hit.collider.tag == "Player")
+            //    {
+            //    }
+            //}
         }
     }
 }

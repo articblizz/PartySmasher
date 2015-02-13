@@ -2,8 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class LuieScript : MonoBehaviour {
+public class LuieScript : PlayerInputV2 {
 
+    [Header("Luie Script Attributes")]
     public PlyControls Controls;
     public KeyCode ThrowKey;
     public GameObject BombPref;
@@ -20,7 +21,7 @@ public class LuieScript : MonoBehaviour {
 
     Animator animator;
 
-    int direction = 1;
+    int dir = 1;
     int lastDirection = 0;
 
     float damage = 10;
@@ -33,6 +34,7 @@ public class LuieScript : MonoBehaviour {
 
     void Start ()
     {
+        DaStart();
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -40,11 +42,13 @@ public class LuieScript : MonoBehaviour {
 
     void FixedUpdate()
     {
-
+        DaFixed();
     }
     
     void Update ()
     {
+        DaUpdate();
+
         Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
 
         throwTimer += Time.deltaTime;
@@ -81,13 +85,13 @@ public class LuieScript : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                direction = 1;
-                HandleDash(direction);
+                dir = 1;
+                HandleDash(dir);
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
-                direction = -1;
-                HandleDash(direction);
+                dir = -1;
+                HandleDash(dir);
             }
         }
     }
