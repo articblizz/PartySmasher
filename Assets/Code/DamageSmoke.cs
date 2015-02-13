@@ -30,7 +30,7 @@ public class DamageSmoke : MonoBehaviour {
 			{
 				if (keepTrackOfDmg[i] == 0)
 					keepTrackOfDmg[i] = DmgPerTick;
-				col.gameObject.GetComponent<PlayerInputV2>().Hit(keepTrackOfDmg[i], Vector3.zero);
+				col.gameObject.GetComponent<PlayerInputV2>().Hit(keepTrackOfDmg[i], Vector3.zero,0);
 			}
 		}
 	}
