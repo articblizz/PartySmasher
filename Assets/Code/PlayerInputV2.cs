@@ -28,6 +28,8 @@ public class PlayerInputV2 : MonoBehaviour {
 
     Canvas uiCanvas;
 
+    bool isStunned = false;
+
     public float MaxVelocity = 10;
 
     protected void DaStart()
@@ -48,7 +50,7 @@ public class PlayerInputV2 : MonoBehaviour {
         else if (direction > 0 && !isFacingRight)
             Flip();
 
-        if(direction != 0)
+        if(direction != 0 && !isStunned)
             rigidbody.velocity = new Vector3(Speed * direction, rigidbody.velocity.y);
 
         if (rigidbody.velocity.x >= MaxVelocity)
@@ -60,6 +62,11 @@ public class PlayerInputV2 : MonoBehaviour {
 
     protected void DaUpdate()
     {
+        if (stunnedDuration > 0)
+            stunnedDuration -= Time.deltaTime;
+        else
+            isStunned = false;
+
         if (immortal)
         {
             immortalTimer += Time.deltaTime;
@@ -95,9 +102,14 @@ public class PlayerInputV2 : MonoBehaviour {
         uiCanvas.transform.RotateAround(transform.position, transform.up, 180f);
     }
 
-    public void Hit(float dmg, Vector3 dir)
+
+    float stunnedDuration = 0;
+    public void Hit(float dmg, Vector3 dir, float stunTime)
     {
         rigidbody.AddForce(dir * KnockbackForce);
+        stunnedDuration = stunTime;
+
+        isStunned = true;
 
         Health -= dmg;
         if (Health <= 0)
@@ -108,6 +120,7 @@ public class PlayerInputV2 : MonoBehaviour {
             else
             {
                 Health = 100;
+                rigidbody.velocity = Vector3.zero;
                 rigidbody.MovePosition(new Vector3(0, 12, 0));
             }
         }

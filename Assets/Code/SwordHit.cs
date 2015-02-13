@@ -22,7 +22,7 @@ public class SwordHit : MonoBehaviour {
             if (col.tag == "Player" && isPunching)
             {
                 print(col.name);
-                col.collider.GetComponent<PlayerInput>().Hit(10, Vector3.Normalize(col.transform.position - transform.position));
+                col.collider.GetComponent<PlayerInputV2>().Hit(10, Vector3.Normalize(col.transform.position - transform.position),0.5f);
             }
         }
     }
