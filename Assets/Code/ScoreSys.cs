@@ -19,7 +19,7 @@ public class ScoreSys : MonoBehaviour {
         string text = "";
         foreach (GameObject ply in players)
         {
-            text += ply.GetComponent<PlayerInput>().lives + " - " + ply.name + "\n";
+            text += ply.GetComponent<PlayerInputV2>().lives + " - " + ply.name + "\n";
         }
 
         scoreboard.text = text;

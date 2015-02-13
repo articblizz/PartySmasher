@@ -34,7 +34,6 @@ public class BombScript : MonoBehaviour
     void Explode()
     {
         Collider[] colliders = Physics.OverlapSphere(gameObject.rigidbody.position, ExplosionRadius);
-
         foreach (Collider col in colliders)
         {
             if (col.rigidbody == null) continue;
