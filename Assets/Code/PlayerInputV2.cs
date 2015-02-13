@@ -48,7 +48,8 @@ public class PlayerInputV2 : MonoBehaviour {
         else if (direction > 0 && !isFacingRight)
             Flip();
 
-        rigidbody.velocity = new Vector3(Speed * direction, rigidbody.velocity.y);
+        if(direction != 0)
+            rigidbody.velocity = new Vector3(Speed * direction, rigidbody.velocity.y);
 
         if (rigidbody.velocity.x >= MaxVelocity)
             rigidbody.velocity = new Vector3(MaxVelocity, rigidbody.velocity.y);
@@ -81,6 +82,9 @@ public class PlayerInputV2 : MonoBehaviour {
         else
             gameObject.layer = LayerMask.NameToLayer("Player");
         //print(gameObject.layer.ToString());
+
+
+
     }
 
     void Flip()
@@ -107,8 +111,5 @@ public class PlayerInputV2 : MonoBehaviour {
                 rigidbody.MovePosition(new Vector3(0, 12, 0));
             }
         }
-
-
-
     }
 }

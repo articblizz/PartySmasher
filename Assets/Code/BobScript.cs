@@ -51,18 +51,17 @@ public class BobScript : PlayerInputV2 {
             {
                 rigidbody.velocity = new Vector3(rigidbody.velocity.x + DashSpeed, rigidbody.velocity.y);
             }
-            //print(rigidbody.velocity.x);
         }
     }
     
     // Update is called once per frame
     void Update () {
+        timer += Time.deltaTime;
 
         base.DaUpdate();
 
-        //Debug.DrawRay(transform.position, transform.right * hitDistance, Color.red);
 
-        timer += Time.deltaTime;
+
 
         if (timer >= 0.2f)
             sword.isPunching = false;
@@ -71,8 +70,6 @@ public class BobScript : PlayerInputV2 {
         {
             Slash();
         }
-
-
 
         if (readyToDash && isOffCooldown)
         {
@@ -86,10 +83,14 @@ public class BobScript : PlayerInputV2 {
         else if(!isOffCooldown)
         {
             dashTimerTwo += Time.deltaTime;
-            if (dashTimerTwo >= 0.2f)
-                rigidbody.drag = 1;
+            //if (dashTimerTwo >= 0.2f)
+            //    rigidbody.drag = 1;
 
             //print(rigidbody.drag);
+
+            if (dashTimerTwo >= 0.4f)
+                isDashing = false;
+
             if (dashTimerTwo >= DashCooldown)
             {
                 isOffCooldown = true;
