@@ -25,7 +25,7 @@ public class PlayerInputV2 : MonoBehaviour {
     bool isFacingRight = true;
     Text hpText;
 
-    bool isOnGround;
+    protected bool isOnGround;
 
     float direction = 0;
 

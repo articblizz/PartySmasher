@@ -14,6 +14,8 @@ public class BobScript : PlayerInputV2 {
     [Header("Bobscript Attributes")]
     public PlyControls Controls;
 
+    public ParticleSystem particles;
+
     //float damage = 10;
     Animator animator;
     public KeyCode SlashKey;
@@ -25,6 +27,7 @@ public class BobScript : PlayerInputV2 {
 
         animator = GetComponentInChildren<Animator>();
         DaStart();
+        particles = GetComponentInChildren<ParticleSystem>();
     }
 
     public float DashSpeed = 5;
@@ -47,6 +50,11 @@ public class BobScript : PlayerInputV2 {
             GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x + (lastDirection * DashSpeed), GetComponent<Rigidbody>().velocity.y);
 
         }
+
+        if (isOnGround && !particles.enableEmission)
+            particles.enableEmission = true;
+        else if (!isOnGround && particles.enableEmission)
+            particles.enableEmission = false;
     }
     
     // Update is called once per frame
