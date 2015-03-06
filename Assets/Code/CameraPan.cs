@@ -4,6 +4,9 @@ using System.Collections;
 public class CameraPan : MonoBehaviour
 {
 
+
+    public float additionalDistance = 5, additionalHeight = 2;
+
     GameObject[] players;
 
     // Use this for initialization
@@ -50,8 +53,10 @@ public class CameraPan : MonoBehaviour
 
         float camDis = Vector3.Distance(transform.position, center);
         float distance = Vector3.Distance(new Vector3(positions[idToLeft].x, 0), new Vector3(positions[idToRight].x, 0));
-        center.z = (-distance / 3) - 5;
-        center.y += 2;
+        center.z = (-distance / 3) - additionalDistance;
+        center.y += additionalHeight;
+
+        
 
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(center.x, center.y, center.z), camDis/40);
         //transform.position = Vector3.MoveTowards(transform.position, new Vector3(center.x, center.y, center.z), distance/15);

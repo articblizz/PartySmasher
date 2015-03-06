@@ -21,8 +21,12 @@ public class SwordHit : MonoBehaviour {
         {
             if (col.tag == "Player" && isPunching)
             {
-                print(col.name);
-                col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10, Vector3.Normalize(col.transform.position - transform.position),0.5f);
+                var script = col.GetComponent<Collider>().GetComponent<PlayerInputV2>();
+                if (script != null)
+                {
+                    print(col.name);
+                    col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10, Vector3.Normalize(col.transform.position - transform.position) * 2, 0.5f);
+                }
             }
         }
     }

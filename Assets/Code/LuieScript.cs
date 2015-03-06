@@ -24,7 +24,7 @@ public class LuieScript : PlayerInputV2 {
     int dir = 1;
     int lastDirection = 0;
 
-    float damage = 10;
+    //float damage = 10;
     float dashTimer;
     float dashTimerTwo;
     float throwTimer;
@@ -37,8 +37,6 @@ public class LuieScript : PlayerInputV2 {
         DaStart();
         animator = GetComponentInChildren<Animator>();
     }
-
-
 
     void FixedUpdate()
     {

@@ -225,6 +225,8 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{A8403B34-9994-4A31-A99D-280C480382A1}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp-vs.csproj">
       <Project>{8D44865A-4974-6E5B-0279-8FE8C9394053}</Project>      <Name>Assembly-CSharp-vs</Name>    </ProjectReference>
   </ItemGroup>

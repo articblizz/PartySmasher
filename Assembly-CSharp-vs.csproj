@@ -56,6 +56,7 @@
      <Compile Include="Assets\Code\PlayerInputV2.cs" />
      <Compile Include="Assets\Code\ScoreSys.cs" />
      <Compile Include="Assets\Code\SwordHit.cs" />
+     <Compile Include="Assets\Manage.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Resources\Aubergine\Shaders\ImageEffects\NightVisionV2.shader" />
@@ -190,6 +191,10 @@
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{A8403B34-9994-4A31-A99D-280C480382A1}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

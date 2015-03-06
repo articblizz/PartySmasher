@@ -14,7 +14,7 @@ public class BobScript : PlayerInputV2 {
     [Header("Bobscript Attributes")]
     public PlyControls Controls;
 
-    float damage = 10;
+    //float damage = 10;
     Animator animator;
     public KeyCode SlashKey;
 
@@ -36,6 +36,7 @@ public class BobScript : PlayerInputV2 {
     public float DashForce = 100;
     bool readyToDash = false;
     bool isOffCooldown = true;
+    public float SlashTime = 0.4f;
 
     void FixedUpdate()
     {
@@ -54,7 +55,7 @@ public class BobScript : PlayerInputV2 {
 
         base.DaUpdate();
 
-        if (timer >= 0.2f)
+        if (timer >= SlashTime)
             sword.isPunching = false;
 
         if (Input.GetKey(SlashKey))
@@ -124,7 +125,6 @@ public class BobScript : PlayerInputV2 {
         }
     }
 
-    public float hitDistance = 3;
     float timer;
     public float SlashCooldown;
 

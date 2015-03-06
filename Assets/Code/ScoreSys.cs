@@ -19,6 +19,7 @@ public class ScoreSys : MonoBehaviour {
         string text = "";
         foreach (GameObject ply in players)
         {
+            if(ply.GetComponent<PlayerInputV2>() != null)
             text += ply.GetComponent<PlayerInputV2>().lives + " - " + ply.name + "\n";
         }
 
