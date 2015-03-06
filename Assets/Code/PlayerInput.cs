@@ -45,19 +45,19 @@ public class PlayerInput : MonoBehaviour {
     {
         hpText.text = string.Format("{0:0}", Health);
 
-        isOnGround = Physics.CheckCapsule(collider.bounds.center,new Vector3(collider.bounds.center.x,collider.bounds.min.y-0.1f,collider.bounds.center.z),0.18f, whatIsGround);
+        isOnGround = Physics.CheckCapsule(GetComponent<Collider>().bounds.center,new Vector3(GetComponent<Collider>().bounds.center.x,GetComponent<Collider>().bounds.min.y-0.1f,GetComponent<Collider>().bounds.center.z),0.18f, whatIsGround);
 
         if (direction < 0 && isFacingRight)
             Flip();
         else if (direction > 0 && !isFacingRight)
             Flip();
 
-        rigidbody.AddForce(new Vector3(Speed * direction, 0));
+        GetComponent<Rigidbody>().AddForce(new Vector3(Speed * direction, 0));
 
-        if(rigidbody.velocity.x >= MaxVelocity)
-            rigidbody.velocity = new Vector3(MaxVelocity, rigidbody.velocity.y);
-        else if(rigidbody.velocity.x <= -MaxVelocity)
-            rigidbody.velocity = new Vector3(-MaxVelocity, rigidbody.velocity.y);
+        if(GetComponent<Rigidbody>().velocity.x >= MaxVelocity)
+            GetComponent<Rigidbody>().velocity = new Vector3(MaxVelocity, GetComponent<Rigidbody>().velocity.y);
+        else if(GetComponent<Rigidbody>().velocity.x <= -MaxVelocity)
+            GetComponent<Rigidbody>().velocity = new Vector3(-MaxVelocity, GetComponent<Rigidbody>().velocity.y);
     }
 
     public float DoubleTapThingy = 0.5f;
@@ -72,7 +72,7 @@ public class PlayerInput : MonoBehaviour {
 
     public void Hit(float dmg, Vector3 dir)
     {
-        rigidbody.AddForce(dir * KnockbackForce);
+        GetComponent<Rigidbody>().AddForce(dir * KnockbackForce);
 
         Health -= dmg;
         if (Health <= 0)
@@ -83,7 +83,7 @@ public class PlayerInput : MonoBehaviour {
             else
             {
                 Health = 100;
-                rigidbody.MovePosition(new Vector3(0, 12, 0));
+                GetComponent<Rigidbody>().MovePosition(new Vector3(0, 12, 0));
             }
         }
     }
@@ -99,7 +99,7 @@ public class PlayerInput : MonoBehaviour {
             else
             {
                 Health = 100;
-                rigidbody.MovePosition(new Vector3(0, 12, 0));
+                GetComponent<Rigidbody>().MovePosition(new Vector3(0, 12, 0));
             }
         }
     }
@@ -137,7 +137,7 @@ public class PlayerInput : MonoBehaviour {
 
                 if (isOnGround && Input.GetKeyDown(KeyCode.W))
                 {
-                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
                 }
 
                 break;
@@ -153,7 +153,7 @@ public class PlayerInput : MonoBehaviour {
 
                 if (isOnGround && Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
                 }
 
                 break;

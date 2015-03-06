@@ -1,21 +1,8 @@
 ﻿<Properties>
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\BombScript.cs">
-    <Files>
-      <File FileName="Assets\Code\BombScript.cs" Line="4" Column="19" />
-=======
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CameraPan.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\PlayerInputV2.cs">
     <Files>
-      <File FileName="..\New Unity Project\Assets\Code\MegamanConroller.cs" Line="1" Column="1" />
-      <File FileName="..\New Unity Project\Assets\Code\CheckIfDead.cs" Line="1" Column="1" />
-      <File FileName="..\New Unity Project\Assets\Code\BackAndForth.cs" Line="1" Column="1" />
-      <File FileName="..\New Unity Project\Assets\Code\Fall.cs" Line="1" Column="1" />
-      <File FileName="..\New Unity Project\Assets\Code\BridgeScript.cs" Line="1" Column="1" />
-      <File FileName="..\New Unity Project\Assets\Code\DrawHUD.cs" Line="1" Column="1" />
-      <File FileName="Assets\CameraPan.cs" Line="1" Column="1" />
->>>>>>> origin/master
+      <File FileName="Assets\Code\PlayerInputV2.cs" Line="135" Column="58" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

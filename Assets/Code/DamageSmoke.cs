@@ -26,7 +26,7 @@ public class DamageSmoke : MonoBehaviour {
 	{
 		for(int i = 0; i < characters.Length; i++)
 		{
-			if (col == characters[i].collider)
+			if (col == characters[i].GetComponent<Collider>())
 			{
 				if (keepTrackOfDmg[i] == 0)
 					keepTrackOfDmg[i] = DmgPerTick;

@@ -20,7 +20,7 @@ public class BombScript : MonoBehaviour
 
 	void Throw (float[] array)
     {
-        gameObject.rigidbody.AddForce(array[1] * array[0], array[2], 0, ForceMode.Impulse);
+        gameObject.GetComponent<Rigidbody>().AddForce(array[1] * array[0], array[2], 0, ForceMode.Impulse);
 	}
 
 	void Update ()
@@ -33,17 +33,17 @@ public class BombScript : MonoBehaviour
 
     void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(gameObject.rigidbody.position, ExplosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(gameObject.GetComponent<Rigidbody>().position, ExplosionRadius);
         foreach (Collider col in colliders)
         {
-            if (col.rigidbody == null) continue;
+            if (col.GetComponent<Rigidbody>() == null) continue;
 
             if (col.tag == "Player")
             {
                 col.gameObject.GetComponent<PlayerInputV2>().Hit(25, Vector3.zero, 2);
             }
 
-            col.rigidbody.AddExplosionForce(ExplosionForce, gameObject.rigidbody.position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);
+            col.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, gameObject.GetComponent<Rigidbody>().position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);
 
             //Debug.Log("BOOM");
             DestroyObject(gameObject);
@@ -52,6 +52,6 @@ public class BombScript : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(gameObject.rigidbody.position, ExplosionRadius);
+        Gizmos.DrawWireSphere(gameObject.GetComponent<Rigidbody>().position, ExplosionRadius);
     }
 }

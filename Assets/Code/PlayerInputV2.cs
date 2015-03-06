@@ -50,7 +50,7 @@ public class PlayerInputV2 : MonoBehaviour {
     {
         hpText.text = string.Format("{0:0}", Health);
 
-        isOnGround = Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x, collider.bounds.min.y - 0.1f, collider.bounds.center.z), 0.18f, whatIsGround);
+        isOnGround = Physics.CheckCapsule(GetComponent<Collider>().bounds.center, new Vector3(GetComponent<Collider>().bounds.center.x, GetComponent<Collider>().bounds.min.y - 0.1f, GetComponent<Collider>().bounds.center.z), 0.18f, whatIsGround);
         //print(isOnGround);
 
         if (!isStunned)
@@ -62,12 +62,12 @@ public class PlayerInputV2 : MonoBehaviour {
         }
 
         if(!isStunned)
-            rigidbody.velocity = new Vector3(Speed * direction, rigidbody.velocity.y);
+            GetComponent<Rigidbody>().velocity = new Vector3(Speed * direction, GetComponent<Rigidbody>().velocity.y);
 
-        if (rigidbody.velocity.x >= MaxVelocity)
-            rigidbody.velocity = new Vector3(MaxVelocity, rigidbody.velocity.y);
-        else if (rigidbody.velocity.x <= -MaxVelocity)
-            rigidbody.velocity = new Vector3(-MaxVelocity, rigidbody.velocity.y);
+        if (GetComponent<Rigidbody>().velocity.x >= MaxVelocity)
+            GetComponent<Rigidbody>().velocity = new Vector3(MaxVelocity, GetComponent<Rigidbody>().velocity.y);
+        else if (GetComponent<Rigidbody>().velocity.x <= -MaxVelocity)
+            GetComponent<Rigidbody>().velocity = new Vector3(-MaxVelocity, GetComponent<Rigidbody>().velocity.y);
     }
 
 
@@ -106,7 +106,7 @@ public class PlayerInputV2 : MonoBehaviour {
 
                 if (Input.GetKeyDown(KeyCode.W) && isOnGround)
                 {
-                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
                 }
                 break;
             case PlyInput.Player2:
@@ -123,20 +123,16 @@ public class PlayerInputV2 : MonoBehaviour {
 
                 if (Input.GetKeyDown(KeyCode.UpArrow) && isOnGround)
                 {
-                    rigidbody.AddForce(new Vector3(0, JumpForce));
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
                 }
                 
                 break;
         }
 
-        if (rigidbody.velocity.y > 1)
+        if (GetComponent<Rigidbody>().velocity.y > 1)
             gameObject.layer = LayerMask.NameToLayer("PlayerNoPcol");
         else
             gameObject.layer = LayerMask.NameToLayer("Player");
-        //print(gameObject.layer.ToString());
-
-
-
     }
 
     void Flip()
@@ -151,7 +147,7 @@ public class PlayerInputV2 : MonoBehaviour {
     float stunnedDuration = 0;
     public void Hit(float dmg, Vector3 dir, float stunTime)
     {
-        rigidbody.AddForce(dir * KnockbackForce);
+        GetComponent<Rigidbody>().AddForce(dir * KnockbackForce);
         stunnedDuration = stunTime;
 
         isStunned = true;
@@ -165,8 +161,8 @@ public class PlayerInputV2 : MonoBehaviour {
             else
             {
                 Health = 100;
-                rigidbody.velocity = Vector3.zero;
-                rigidbody.MovePosition(new Vector3(0, 12, 0));
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                GetComponent<Rigidbody>().MovePosition(new Vector3(0, 12, 0));
             }
         }
     }

@@ -71,9 +71,9 @@ public class LuieScript : PlayerInputV2 {
         {
             dashTimerTwo += Time.deltaTime;
             if (dashTimerTwo >= 0.2f)
-                rigidbody.drag = 1;
+                GetComponent<Rigidbody>().drag = 1;
 
-            print(rigidbody.drag);
+            print(GetComponent<Rigidbody>().drag);
             if (dashTimerTwo >= DashCooldown)
             {
                 isOffCooldown = true;
@@ -114,8 +114,8 @@ public class LuieScript : PlayerInputV2 {
     {
         if (!isOffCooldown)
             return;
-        rigidbody.drag = 0f;
-        rigidbody.AddForce(new Vector3(DashForce * direction, 0));
+        GetComponent<Rigidbody>().drag = 0f;
+        GetComponent<Rigidbody>().AddForce(new Vector3(DashForce * direction, 0));
 
         print("Dashes!");
         isOffCooldown = false;
@@ -128,7 +128,7 @@ public class LuieScript : PlayerInputV2 {
         {
             throwTimer = 0;
             animator.SetTrigger("Throw");
-            GameObject bomb = (GameObject)Instantiate(BombPref, new Vector3(transform.rigidbody.position.x + .8f * transform.right.x, transform.rigidbody.position.y, transform.rigidbody.position.z), Quaternion.identity);
+            GameObject bomb = (GameObject)Instantiate(BombPref, new Vector3(transform.GetComponent<Rigidbody>().position.x + .8f * transform.right.x, transform.GetComponent<Rigidbody>().position.y, transform.GetComponent<Rigidbody>().position.z), Quaternion.identity);
             float[] array = new float[3];
             array[0] = gameObject.transform.right.x;
             array[1] = ThrowForceX;

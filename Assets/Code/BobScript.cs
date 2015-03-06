@@ -43,7 +43,7 @@ public class BobScript : PlayerInputV2 {
 
         if (isDashing)
         {
-            rigidbody.velocity = new Vector3(rigidbody.velocity.x + (lastDirection * DashSpeed), rigidbody.velocity.y);
+            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x + (lastDirection * DashSpeed), GetComponent<Rigidbody>().velocity.y);
 
         }
     }
