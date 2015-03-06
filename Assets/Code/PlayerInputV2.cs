@@ -160,7 +160,7 @@ public class PlayerInputV2 : MonoBehaviour {
         if (Health <= 0)
         {
             lives--;
-            if (lives < 0)
+            if (lives <= 0)
                 Destroy(gameObject);
             else
             {

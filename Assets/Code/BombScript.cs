@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum forceMode
 {
@@ -11,6 +12,7 @@ public enum forceMode
 
 public class BombScript : MonoBehaviour
 {
+    public Text TimerText;
     public float BlowUpTimer = 5;
 
     public float ExplosionForce = 10;
@@ -26,6 +28,8 @@ public class BombScript : MonoBehaviour
 	void Update ()
     {
         BlowUpTimer -= Time.deltaTime;
+
+        TimerText.text = ((int)BlowUpTimer).ToString();
 
         if (BlowUpTimer <= 0)
             Explode();
