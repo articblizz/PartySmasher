@@ -10,6 +10,10 @@ public class SwordHit : MonoBehaviour {
 
 	float hitMultiplier;
 
+	public Color[] SlashColors;
+
+	public int currentSlash = 0;
+
 
 	bool isOn = false;
 	// Use this for initialization
@@ -32,6 +36,8 @@ public class SwordHit : MonoBehaviour {
 
 		if (!isPunching)
 			hitMultiplier = 1;
+
+		Trail.MyColor = SlashColors [currentSlash];
 	}
 
     void OnTriggerEnter(Collider col)

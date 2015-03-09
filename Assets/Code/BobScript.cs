@@ -76,7 +76,6 @@ public class BobScript : PlayerInputV2 {
 		}
 
 
-
         //if (dashIsOffCooldown)
         //{
         //    dashTimer += Time.deltaTime;
@@ -158,16 +157,17 @@ public class BobScript : PlayerInputV2 {
 			timer = 0;
 			animator.SetTrigger ("Slash");
 			sword.isPunching = true;
-			slashes = 1;
-		} else if (slashes == 1) {
+			slashes = 0;
+		} else if (slashes == 0) {
 			animator.SetTrigger ("Slash2");
 			timer = 0;
-			slashes = 2;
-		} else if (slashes == 2) {
+			slashes = 1;
+		} else if (slashes == 1) {
 			animator.SetTrigger("Slash3");
 			timer = 0;
-			slashes = 0;
+			slashes = 2;
 		}
-
+		sword.currentSlash = slashes;
+		
     }
 }
