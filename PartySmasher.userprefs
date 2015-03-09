@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\XInputDotNet\Examples\XInputTestCS.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\BobScript.cs">
     <Files>
-      <File FileName="Assets\Code\PlayerInputV2.cs" Line="135" Column="58" />
-      <File FileName="Assets\Code\BobScript.cs" Line="23" Column="2" />
-      <File FileName="Assets\XInputDotNet\Examples\XInputTestCS.cs" Line="8" Column="24" />
+      <File FileName="Assets\Code\PlayerInputV2.cs" Line="114" Column="1" />
+      <File FileName="Assets\Code\BobScript.cs" Line="143" Column="21" />
+      <File FileName="Assets\XInputDotNet\Examples\XInputTestCS.cs" Line="31" Column="51" />
+      <File FileName="Assets\PlayerMng.cs" Line="42" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

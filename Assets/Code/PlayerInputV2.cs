@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public enum PlyInput
 {
@@ -17,10 +18,18 @@ public class PlayerInputV2 : MonoBehaviour {
 
     public PlyInput inputType;
 
+	protected GamePadState gamepadState;
+	protected GamePadState prevState;
+	public PlayerIndex MyIndex;
+
+	public bool isUsingController = true;
+
     public int lives = 3;
 
     public float JumpForce = 200;
     public LayerMask whatIsGround;
+
+	Rigidbody rigidBody;
 
     bool isFacingRight = true;
     Text hpText;
@@ -43,6 +52,7 @@ public class PlayerInputV2 : MonoBehaviour {
     protected void DaStart()
     {
         uiCanvas = GetComponentInChildren<Canvas>();
+		rigidBody = GetComponent<Rigidbody> ();
         hpText = GetComponentInChildren<Text>();
     }
 
@@ -70,7 +80,6 @@ public class PlayerInputV2 : MonoBehaviour {
             GetComponent<Rigidbody>().velocity = new Vector3(-MaxVelocity, GetComponent<Rigidbody>().velocity.y);
     }
 
-
     protected void DaUpdate()
     {
         if (stunnedDuration > 0)
@@ -88,26 +97,44 @@ public class PlayerInputV2 : MonoBehaviour {
             }
         }
 
-        direction = Input.GetAxis("Horizontal");
+	
+
 
         switch (inputType)
         {
             case PlyInput.Player1:
-                if (Input.GetKey(KeyCode.A))
-                {
-                    direction = -1;
-                }
-                else if (Input.GetKey(KeyCode.D))
-                {
-                    direction = 1;
-                }
-                else
-                    direction = 0;
 
-                if (Input.GetKeyDown(KeyCode.W) && isOnGround)
-                {
-                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
-                }
+				if(isUsingController)
+				{
+					prevState = gamepadState;
+					gamepadState = GamePad.GetState (MyIndex);
+				
+					direction = gamepadState.ThumbSticks.Left.X;
+
+					if(gamepadState.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released && isOnGround)
+					{
+						rigidBody.AddForce(new Vector2(0, JumpForce));
+					}
+
+				}
+				else
+				{
+	                if (Input.GetKey(KeyCode.A))
+	                {
+	                    direction = -1;
+	                }
+	                else if (Input.GetKey(KeyCode.D))
+	                {
+	                    direction = 1;
+	                }
+	                else
+	                    direction = 0;
+
+	                if (Input.GetKeyDown(KeyCode.W) && isOnGround)
+	                {
+	                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
+	                }
+				}
                 break;
             case PlyInput.Player2:
                 if (Input.GetKey(KeyCode.LeftArrow))

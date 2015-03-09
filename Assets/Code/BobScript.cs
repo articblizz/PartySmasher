@@ -42,7 +42,7 @@ public class BobScript : PlayerInputV2 {
     public float DashCooldown = 3;
     public float DashForce = 100;
     bool readyToDash = false;
-    bool isOffCooldown = true;
+    bool dashIsOffCooldown = true;
     public float SlashTime = 0.4f;
 
 	public float DashingTime = 0.3f;
@@ -53,7 +53,7 @@ public class BobScript : PlayerInputV2 {
 
         if (isDashing)
         {
-            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x + (lastDirection * DashSpeed), GetComponent<Rigidbody>().velocity.y);
+            GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x + (dashDirection * DashSpeed), GetComponent<Rigidbody>().velocity.y);
 
         }
 
@@ -74,16 +74,16 @@ public class BobScript : PlayerInputV2 {
 
 
 
-        if (readyToDash && isOffCooldown)
-        {
-            dashTimer += Time.deltaTime;
-            if (dashTimer >= DashTiming)
-            {
-                readyToDash = false;
-                dashTimer = 0;
-            }
-        }
-        else if(!isOffCooldown)
+        //if (dashIsOffCooldown)
+        //{
+        //    dashTimer += Time.deltaTime;
+       //     if (dashTimer >= DashTiming)
+       //     {
+      //          readyToDash = false;
+      //          dashTimer = 0;
+     //       }
+     //   }
+         if(!dashIsOffCooldown)
         {
             dashTimerTwo += Time.deltaTime;
             //if (dashTimerTwo >= 0.2f)
@@ -96,7 +96,7 @@ public class BobScript : PlayerInputV2 {
 
             if (dashTimerTwo >= DashCooldown)
             {
-                isOffCooldown = true;
+                dashIsOffCooldown = true;
                 dashTimerTwo = 0;
             }
         }
@@ -106,11 +106,9 @@ public class BobScript : PlayerInputV2 {
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                HandleDash(1);
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
-                HandleDash(-1);
             }
 
 			if (Input.GetKey(SlashKey))
@@ -122,40 +120,33 @@ public class BobScript : PlayerInputV2 {
         {
 			if(gamepadState.Buttons.RightShoulder == ButtonState.Pressed)
 				Slash();
+			if(gamepadState.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released)
+			{
+				Dash();
+			}
         }
     }
 
+
+	int dashDirection;
     bool isDashing = false;
-
-    int lastDirection = 0;
-    void HandleDash(int d)
-    {
-        if (!readyToDash)
-        {
-            lastDirection = d;
-            //print("Ready!");
-            readyToDash = true;
-        }
-        else if (isOffCooldown && d == lastDirection && !isStunned)
-        {
-            Dash(d);
-        }
-    }
 
     float timer;
     public float SlashCooldown;
 
-    void Dash(int direction)
+    void Dash()
     {
-        if (!isOffCooldown)
+        if (!dashIsOffCooldown || isStunned)
             return;
+
+		if (transform.rotation.y > 10)
+			dashDirection = -1;
+		else
+			dashDirection = 1;
         isDashing = true;
-        //rigidbody.drag = 0f;
-        //rigidbody.AddForce(new Vector3(DashForce * direction, 0));
 
         print("Dashes!");
-        isOffCooldown = false;
-        readyToDash = false;
+        dashIsOffCooldown = false;
     }
 
     void Slash()
@@ -165,14 +156,6 @@ public class BobScript : PlayerInputV2 {
             timer = 0;
             animator.SetTrigger("Slash");
             sword.isPunching = true;
-            
-            //RaycastHit hit;
-            //if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, hitDistance))
-            //{
-            //    if (hit.collider.tag == "Player")
-            //    {
-            //    }
-            //}
         }
     }
 }
