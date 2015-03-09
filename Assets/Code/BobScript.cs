@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 
 public enum PlyControls
@@ -15,6 +16,9 @@ public class BobScript : PlayerInputV2 {
     public PlyControls Controls;
 
     public ParticleSystem particles;
+
+	
+	
 
     //float damage = 10;
     Animator animator;
@@ -41,6 +45,8 @@ public class BobScript : PlayerInputV2 {
     bool isOffCooldown = true;
     public float SlashTime = 0.4f;
 
+	public float DashingTime = 0.3f;
+
     void FixedUpdate()
     {
         base.DaFixed();
@@ -66,10 +72,7 @@ public class BobScript : PlayerInputV2 {
         if (timer >= SlashTime)
             sword.isPunching = false;
 
-        if (Input.GetKey(SlashKey))
-        {
-            Slash();
-        }
+
 
         if (readyToDash && isOffCooldown)
         {
@@ -88,7 +91,7 @@ public class BobScript : PlayerInputV2 {
 
             //print(rigidbody.drag);
 
-            if (dashTimerTwo >= 0.4f)
+            if (dashTimerTwo >= DashingTime)
                 isDashing = false;
 
             if (dashTimerTwo >= DashCooldown)
@@ -99,7 +102,7 @@ public class BobScript : PlayerInputV2 {
         }
 
 
-        if (Controls == PlyControls.WASD)
+        if (Controls == PlyControls.WASD && !isUsingController)
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
@@ -109,10 +112,16 @@ public class BobScript : PlayerInputV2 {
             {
                 HandleDash(-1);
             }
+
+			if (Input.GetKey(SlashKey))
+			{
+				Slash();
+			}
         }
         else
         {
-
+			if(gamepadState.Buttons.RightShoulder == ButtonState.Pressed)
+				Slash();
         }
     }
 
