@@ -17,7 +17,7 @@ public class BobScript : PlayerInputV2 {
 
     public ParticleSystem particles;
 
-	
+	int slashes = 0;
 	
 
     //float damage = 10;
@@ -66,11 +66,14 @@ public class BobScript : PlayerInputV2 {
     // Update is called once per frame
     void Update () {
         timer += Time.deltaTime;
-
+			animator.SetFloat("TimeSince", timer);
+		
         base.DaUpdate();
 
-        if (timer >= SlashTime)
-            sword.isPunching = false;
+        if (timer >= SlashTime) {
+			slashes = 0;
+			sword.isPunching = false;
+		}
 
 
 
@@ -118,7 +121,7 @@ public class BobScript : PlayerInputV2 {
         }
         else
         {
-			if(gamepadState.Buttons.RightShoulder == ButtonState.Pressed)
+			if(gamepadState.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released)
 				Slash();
 			if(gamepadState.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released)
 			{
@@ -151,11 +154,20 @@ public class BobScript : PlayerInputV2 {
 
     void Slash()
     {
-        if (timer >= SlashCooldown)
-        {
-            timer = 0;
-            animator.SetTrigger("Slash");
-            sword.isPunching = true;
-        }
+        if (timer >= SlashCooldown) {
+			timer = 0;
+			animator.SetTrigger ("Slash");
+			sword.isPunching = true;
+			slashes = 1;
+		} else if (slashes == 1) {
+			animator.SetTrigger ("Slash2");
+			timer = 0;
+			slashes = 2;
+		} else if (slashes == 2) {
+			animator.SetTrigger("Slash3");
+			timer = 0;
+			slashes = 0;
+		}
+
     }
 }
