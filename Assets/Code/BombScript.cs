@@ -40,7 +40,7 @@ public class BombScript : MonoBehaviour
 
             if (col.tag == "Player")
             {
-                col.gameObject.GetComponent<PlayerInputV2>().Hit(25, Vector3.zero, 2);
+                col.gameObject.GetComponent<PlayerInputV2>().Hit(25, Vector3.zero,0, 2);
             }
 
             col.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, gameObject.GetComponent<Rigidbody>().position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);

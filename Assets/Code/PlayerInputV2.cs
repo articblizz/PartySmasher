@@ -172,10 +172,11 @@ public class PlayerInputV2 : MonoBehaviour {
 
 
     float stunnedDuration = 0;
-    public void Hit(float dmg, Vector3 dir, float stunTime)
+    public void Hit(float dmg, Vector3 dir, float knockback,float stunTime)
     {
-        GetComponent<Rigidbody>().AddForce(dir * KnockbackForce);
-        stunnedDuration = stunTime;
+		print (dir * knockback);
+		GetComponent<Rigidbody>().AddForce(dir * knockback);
+		stunnedDuration = stunTime;
 
         isStunned = true;
 

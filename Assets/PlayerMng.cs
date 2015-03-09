@@ -19,7 +19,6 @@ public class PlayerMng : MonoBehaviour {
 
 		for(int i = 0; i < playerCount; i++) {
 			GameObject player = (GameObject)Instantiate(Characters[i], new Vector2(5 * i, 5), Quaternion.identity);
-			player.name = "BOB";
 			PlayerIndex index = (PlayerIndex)i;
 			GamePadState state = GamePad.GetState(index);
 	

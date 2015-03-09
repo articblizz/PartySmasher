@@ -70,7 +70,11 @@ public class BobScript : PlayerInputV2 {
 		
         base.DaUpdate();
 
-        if (timer >= SlashTime) {
+		var slashtimer = SlashTime;
+		if (slashes == 2)
+			slashtimer = SlashTime + 0.2f;
+
+        if (timer >= slashtimer) {
 			slashes = 0;
 			sword.isPunching = false;
 		}

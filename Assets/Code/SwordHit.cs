@@ -50,8 +50,9 @@ public class SwordHit : MonoBehaviour {
                 if (script != null)
                 {
                     print(col.name);
-                    col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10 * hitMultiplier, Vector3.Normalize(col.transform.position - transform.position) * 2, 0.5f);
+                    col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10 * hitMultiplier, Vector3.Normalize(col.transform.position - transform.parent.parent.position),500*hitMultiplier, 0.5f);
 					hitMultiplier += 0.5f;
+					col.GetComponentInChildren<ParticleSystem>().Play();
                 }
             }
         }
