@@ -23,6 +23,11 @@ public class ScoreSys : MonoBehaviour {
             text += ply.GetComponent<PlayerInputV2>().lives + " - " + ply.name + "\n";
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+        if (Input.GetKeyDown(KeyCode.R))
+            Application.LoadLevel("felix");
+
         scoreboard.text = text;
     }
 }

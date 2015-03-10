@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using XInputDotNetPure;
+using Xft;
 
 
 public enum PlyControls
@@ -14,6 +15,8 @@ public class BobScript : PlayerInputV2 {
 
     [Header("Bobscript Attributes")]
     public PlyControls Controls;
+
+    public XWeaponTrail moveTrail;
 
     public ParticleSystem hoverParticles;
 
@@ -32,6 +35,7 @@ public class BobScript : PlayerInputV2 {
 
         animator = GetComponentInChildren<Animator>();
         DaStart();
+        moveTrail.Deactivate();
     }
 
     public float DashSpeed = 5;
@@ -88,7 +92,10 @@ public class BobScript : PlayerInputV2 {
             dashTimerTwo += Time.deltaTime;
 
             if (dashTimerTwo >= DashingTime)
+            {
+                moveTrail.Deactivate();
                 isDashing = false;
+            }
 
             if (dashTimerTwo >= DashCooldown)
             {
@@ -143,6 +150,7 @@ public class BobScript : PlayerInputV2 {
 
         isDashing = true;
         Hit(0, Vector3.zero, 0, DashingTime);
+        moveTrail.Activate();
 
         dashIsOffCooldown = false;
     }

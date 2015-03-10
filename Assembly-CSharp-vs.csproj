@@ -55,9 +55,9 @@
      <Compile Include="Assets\Code\Manage.cs" />
      <Compile Include="Assets\Code\PlayerInput.cs" />
      <Compile Include="Assets\Code\PlayerInputV2.cs" />
+     <Compile Include="Assets\Code\PlayerMng.cs" />
      <Compile Include="Assets\Code\ScoreSys.cs" />
      <Compile Include="Assets\Code\SwordHit.cs" />
-     <Compile Include="Assets\PlayerMng.cs" />
      <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
      <Compile Include="Assets\XWeaponTrail\Scripts\Spline.cs" />
      <Compile Include="Assets\XWeaponTrail\Scripts\SplineControlPoint.cs" />
