@@ -1,11 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Code\BobScript.cs">
     <Files>
-      <File FileName="Assets\Code\PlayerInputV2.cs" Line="114" Column="1" />
-      <File FileName="Assets\Code\BobScript.cs" Line="143" Column="21" />
-      <File FileName="Assets\XInputDotNet\Examples\XInputTestCS.cs" Line="31" Column="51" />
-      <File FileName="Assets\PlayerMng.cs" Line="42" Column="1" />
+      <File FileName="Assets\Code\BobScript.cs" Line="56" Column="115" />
+      <File FileName="Assets\PlayerMng.cs" Line="27" Column="1" />
+      <File FileName="Assets\Code\PlayerInputV2.cs" Line="79" Column="67" />
+      <File FileName="Assets\Code\SwordHit.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\CameraPan.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\BombScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Code\DamageSmoke.cs" Line="1" Column="1" />
+      <File FileName="Assets\XWeaponTrail\Scripts\XWeaponTrail.cs" Line="418" Column="71" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

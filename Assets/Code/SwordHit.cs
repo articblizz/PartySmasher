@@ -10,10 +10,12 @@ public class SwordHit : MonoBehaviour {
 
 	float hitMultiplier;
 
+	public float AddKnockbackPerHit = 0.5f, DivideDmgPerHit = 1.3f;
+
 	public Color[] SlashColors;
 
 	public int currentSlash = 0;
-
+	float knockMultiplier = 1;
 
 	bool isOn = false;
 	// Use this for initialization
@@ -34,8 +36,10 @@ public class SwordHit : MonoBehaviour {
 			isOn = false;
 		}
 
-		if (!isPunching)
+		if (!isPunching) {
 			hitMultiplier = 1;
+			knockMultiplier = 1;
+		}
 
 		Trail.MyColor = SlashColors [currentSlash];
 	}
@@ -50,9 +54,9 @@ public class SwordHit : MonoBehaviour {
                 if (script != null)
                 {
                     print(col.name);
-                    col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10 * hitMultiplier, Vector3.Normalize(col.transform.position - transform.parent.parent.position),500*hitMultiplier, 0.5f);
-					hitMultiplier += 0.5f;
-					col.GetComponentInChildren<ParticleSystem>().Play();
+                    col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10 * hitMultiplier, Vector3.Normalize(col.transform.position - transform.parent.parent.position),500 * knockMultiplier, 0.5f);
+					knockMultiplier += AddKnockbackPerHit;
+					hitMultiplier /= DivideDmgPerHit;
                 }
             }
         }

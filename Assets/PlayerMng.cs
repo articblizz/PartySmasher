@@ -9,7 +9,6 @@ public class PlayerMng : MonoBehaviour {
 
 	int playerCount;
 	GamePadState state;
-	PlayerIndex myIndex;
 
 	// Use this for initialization
 	void Start () {
@@ -25,8 +24,10 @@ public class PlayerMng : MonoBehaviour {
 			if(state.IsConnected)
 			{
 				print("Connected " + index.ToString());
-				myIndex = index;
-				player.GetComponent<PlayerInputV2>().MyIndex = index;
+				var plyScript = player.GetComponent<PlayerInputV2>();
+				plyScript.MyIndex = index;
+				plyScript.isUsingController = true;
+
 				//if(player.name == "Bob")
 				//{
 				//	player.GetComponent<BobScript>().gamepadState = state;

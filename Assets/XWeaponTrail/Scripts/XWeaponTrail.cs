@@ -415,7 +415,7 @@ namespace Xft
             mMeshObj.SetActive(true);
             MeshFilter mf = mMeshObj.AddComponent<MeshFilter>();
             MeshRenderer mr = mMeshObj.AddComponent<MeshRenderer>();
-            mr.castShadows = false;
+			mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             mr.receiveShadows = false;
             mr.GetComponent<Renderer>().sharedMaterial = MyMaterial;
             mf.sharedMesh = new Mesh();

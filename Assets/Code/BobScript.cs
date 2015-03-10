@@ -15,10 +15,11 @@ public class BobScript : PlayerInputV2 {
     [Header("Bobscript Attributes")]
     public PlyControls Controls;
 
-    public ParticleSystem particles;
+    public ParticleSystem hoverParticles;
 
 	int slashes = 0;
-	
+
+	public ParticleSystem jumpParticles;
 
     //float damage = 10;
     Animator animator;
@@ -31,7 +32,6 @@ public class BobScript : PlayerInputV2 {
 
         animator = GetComponentInChildren<Animator>();
         DaStart();
-        particles = GetComponentInChildren<ParticleSystem>();
     }
 
     public float DashSpeed = 5;
@@ -41,7 +41,6 @@ public class BobScript : PlayerInputV2 {
     public float DashTiming = 0.5f;
     public float DashCooldown = 3;
     public float DashForce = 100;
-    bool readyToDash = false;
     bool dashIsOffCooldown = true;
     public float SlashTime = 0.4f;
 
@@ -54,14 +53,19 @@ public class BobScript : PlayerInputV2 {
         if (isDashing)
         {
             GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x + (dashDirection * DashSpeed), GetComponent<Rigidbody>().velocity.y);
-
         }
 
-        if (isOnGround && !particles.enableEmission)
-            particles.enableEmission = true;
-        else if (!isOnGround && particles.enableEmission)
-            particles.enableEmission = false;
+        if (isOnGround && !hoverParticles.enableEmission)
+            hoverParticles.enableEmission = true;
+        else if (!isOnGround && hoverParticles.enableEmission)
+            hoverParticles.enableEmission = false;
     }
+
+	public override void OnJump ()
+	{
+
+		jumpParticles.Play ();
+	}
     
     // Update is called once per frame
     void Update () {
@@ -79,23 +83,9 @@ public class BobScript : PlayerInputV2 {
 			sword.isPunching = false;
 		}
 
-
-        //if (dashIsOffCooldown)
-        //{
-        //    dashTimer += Time.deltaTime;
-       //     if (dashTimer >= DashTiming)
-       //     {
-      //          readyToDash = false;
-      //          dashTimer = 0;
-     //       }
-     //   }
          if(!dashIsOffCooldown)
-        {
+         {
             dashTimerTwo += Time.deltaTime;
-            //if (dashTimerTwo >= 0.2f)
-            //    rigidbody.drag = 1;
-
-            //print(rigidbody.drag);
 
             if (dashTimerTwo >= DashingTime)
                 isDashing = false;
@@ -110,26 +100,26 @@ public class BobScript : PlayerInputV2 {
 
         if (Controls == PlyControls.WASD && !isUsingController)
         {
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-            }
-
-			if (Input.GetKey(SlashKey))
+			if (Input.GetKeyDown(SlashKey))
 			{
 				Slash();
 			}
+			if(Input.GetKeyDown(KeyCode.LeftControl))
+				Dash ();
         }
         else
         {
-			if(gamepadState.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released)
-				Slash();
+            if (gamepadState.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released)
+            {
+                float d = gamepadState.ThumbSticks.Left.Y;
+                if (d > 0.5f)
+                    UpwardSlash();
+                else
+                   Slash();
+            }
+
 			if(gamepadState.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released)
-			{
 				Dash();
-			}
         }
     }
 
@@ -145,18 +135,23 @@ public class BobScript : PlayerInputV2 {
         if (!dashIsOffCooldown || isStunned)
             return;
 
-		if (transform.rotation.y > 10)
+		if (transform.rotation.eulerAngles.y > 10f)
 			dashDirection = -1;
 		else
 			dashDirection = 1;
-        isDashing = true;
 
-        print("Dashes!");
+
+        isDashing = true;
+        Hit(0, Vector3.zero, 0, DashingTime);
+
         dashIsOffCooldown = false;
     }
 
     void Slash()
     {
+        if (isStunned)
+            return;
+
         if (timer >= SlashCooldown) {
 			timer = 0;
 			animator.SetTrigger ("Slash");
@@ -173,5 +168,19 @@ public class BobScript : PlayerInputV2 {
 		}
 		sword.currentSlash = slashes;
 		
+    }
+
+    void UpwardSlash()
+    {
+        if (isStunned)
+            return;
+        slashes = 0;
+        if (timer >= SlashCooldown)
+        {
+            timer = 0;
+            animator.SetTrigger("UpSlash");
+            sword.isPunching = true;
+        }
+        sword.currentSlash = slashes;
     }
 }

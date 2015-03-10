@@ -18,6 +18,8 @@ public class PlayerInputV2 : MonoBehaviour {
 
     public PlyInput inputType;
 
+	int remainingJumps = 1;
+
 	protected GamePadState gamepadState;
 	protected GamePadState prevState;
 	public PlayerIndex MyIndex;
@@ -38,6 +40,7 @@ public class PlayerInputV2 : MonoBehaviour {
 
     float direction = 0;
 
+    public ParticleSystem hitParticles;
     bool immortal = false;
     float immortalTimer;
     public float ImmortalTime;
@@ -47,7 +50,7 @@ public class PlayerInputV2 : MonoBehaviour {
 
     protected bool isStunned = false;
 
-    public float MaxVelocity = 10;
+	public float MaxVelocity = 10, MaxVelocityY = 10;
 
     protected void DaStart()
     {
@@ -62,6 +65,8 @@ public class PlayerInputV2 : MonoBehaviour {
 
         isOnGround = Physics.CheckCapsule(GetComponent<Collider>().bounds.center, new Vector3(GetComponent<Collider>().bounds.center.x, GetComponent<Collider>().bounds.min.y - 0.1f, GetComponent<Collider>().bounds.center.z), 0.18f, whatIsGround);
         //print(isOnGround);
+		if (isOnGround)
+			remainingJumps = 1;
 
         if (!isStunned)
         {
@@ -78,7 +83,30 @@ public class PlayerInputV2 : MonoBehaviour {
             GetComponent<Rigidbody>().velocity = new Vector3(MaxVelocity, GetComponent<Rigidbody>().velocity.y);
         else if (GetComponent<Rigidbody>().velocity.x <= -MaxVelocity)
             GetComponent<Rigidbody>().velocity = new Vector3(-MaxVelocity, GetComponent<Rigidbody>().velocity.y);
+
+		if (rigidBody.velocity.y > MaxVelocityY) {
+            GetComponent<Rigidbody>().velocity = new Vector3(rigidBody.velocity.x, MaxVelocityY);
+		}
+
+        if (isUsingController)
+        {
+            if (gamepadState.ThumbSticks.Left.Y < -0.4f)
+            {
+                var velo = GetComponent<Rigidbody>().velocity;
+                velo.y += gamepadState.ThumbSticks.Left.Y * 3;
+                if (velo.y < -9)
+                    velo.y = -9;
+                GetComponent<Rigidbody>().velocity = velo;
+                gameObject.layer = LayerMask.NameToLayer("PlayerNoPcol");
+            }
+            else if(rigidBody.velocity.y <= 0)
+                gameObject.layer = LayerMask.NameToLayer("Player");
+        }
     }
+
+	public virtual void OnJump()
+	{
+	}
 
     protected void DaUpdate()
     {
@@ -111,9 +139,9 @@ public class PlayerInputV2 : MonoBehaviour {
 				
 					direction = gamepadState.ThumbSticks.Left.X;
 
-					if(gamepadState.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released && isOnGround)
+					if(gamepadState.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released)
 					{
-						rigidBody.AddForce(new Vector2(0, JumpForce));
+						Jump();
 					}
 
 				}
@@ -130,9 +158,9 @@ public class PlayerInputV2 : MonoBehaviour {
 	                else
 	                    direction = 0;
 
-	                if (Input.GetKeyDown(KeyCode.W) && isOnGround)
+	                if (Input.GetKeyDown(KeyCode.W))
 	                {
-	                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
+						Jump();
 	                }
 				}
                 break;
@@ -148,9 +176,9 @@ public class PlayerInputV2 : MonoBehaviour {
                 else
                     direction = 0;
 
-                if (Input.GetKeyDown(KeyCode.UpArrow) && isOnGround)
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    GetComponent<Rigidbody>().AddForce(new Vector3(0, JumpForce));
+					Jump();
                 }
                 
                 break;
@@ -161,6 +189,16 @@ public class PlayerInputV2 : MonoBehaviour {
         else
             gameObject.layer = LayerMask.NameToLayer("Player");
     }
+
+	void Jump()
+	{
+		print (remainingJumps);
+		if (remainingJumps > 0) {
+			remainingJumps--;
+			rigidBody.AddForce(new Vector2(0, JumpForce));
+			OnJump();
+		}
+	}
 
     void Flip()
     {
@@ -174,10 +212,9 @@ public class PlayerInputV2 : MonoBehaviour {
     float stunnedDuration = 0;
     public void Hit(float dmg, Vector3 dir, float knockback,float stunTime)
     {
-		print (dir * knockback);
 		GetComponent<Rigidbody>().AddForce(dir * knockback);
 		stunnedDuration = stunTime;
-
+        hitParticles.Play();
         isStunned = true;
 
         Health -= dmg;
