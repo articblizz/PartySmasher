@@ -14,12 +14,12 @@ public class PlayerMng : MonoBehaviour {
 	void Start () {
 
 		//playerCount = PlayerPrefs.GetInt ("PlayerCount");
-		playerCount = 2;
+		playerCount = Characters.Length;
 
 		for(int i = 0; i < playerCount; i++) {
-			GameObject player = (GameObject)Instantiate(Characters[i], new Vector2(5 * i, 5), Quaternion.identity);
 			PlayerIndex index = (PlayerIndex)i;
 			GamePadState state = GamePad.GetState(index);
+			GameObject player = (GameObject)Instantiate(Characters[i], new Vector2(5 * i, 5), Quaternion.identity);
 	
 			if(state.IsConnected)
 			{

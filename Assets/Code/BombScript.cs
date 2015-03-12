@@ -18,6 +18,11 @@ public class BombScript : MonoBehaviour
     public float UpwardForce = 1;
     public forceMode Force_Mode = forceMode.Impulse;
 
+    void Start()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.gray;
+    }
+
 	void Throw (float[] array)
     {
         gameObject.GetComponent<Rigidbody>().AddForce(array[1] * array[0], array[2], 0, ForceMode.Impulse);

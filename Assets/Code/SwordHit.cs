@@ -4,7 +4,7 @@ using Xft;
 
 public class SwordHit : MonoBehaviour {
 
-    public bool isPunching = true;
+	public bool isPunching = true;
 
 	public XWeaponTrail Trail;
 
@@ -44,21 +44,20 @@ public class SwordHit : MonoBehaviour {
 		Trail.MyColor = SlashColors [currentSlash];
 	}
 
-    void OnTriggerEnter(Collider col)
-    {
-        if (isPunching)
-        {
-            if (col.tag == "Player" && isPunching)
-            {
-                var script = col.GetComponent<Collider>().GetComponent<PlayerInputV2>();
-                if (script != null)
-                {
-                    print(col.name);
-                    col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10 * hitMultiplier, Vector3.Normalize(col.transform.position - transform.parent.parent.position),500 * knockMultiplier, 0.5f);
+	void OnTriggerEnter(Collider col)
+	{
+		if (isPunching)
+		{
+			if (col.tag == "Player" && isPunching)
+			{
+				var script = col.GetComponent<Collider>().GetComponent<PlayerInputV2>();
+				if (script != null)
+				{
+					col.GetComponent<Collider>().GetComponent<PlayerInputV2>().Hit(10 * hitMultiplier, Vector3.Normalize(col.transform.position - transform.parent.parent.position),500 * knockMultiplier, 0.5f);
 					knockMultiplier += AddKnockbackPerHit;
 					hitMultiplier /= DivideDmgPerHit;
-                }
-            }
-        }
-    }
+				}
+			}
+		}
+	}
 }

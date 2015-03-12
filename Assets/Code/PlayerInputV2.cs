@@ -227,7 +227,7 @@ public class PlayerInputV2 : MonoBehaviour {
             {
                 Health = 100;
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
-                GetComponent<Rigidbody>().MovePosition(new Vector3(0, 12, 0));
+                GetComponent<Rigidbody>().MovePosition(new Vector3(0, 5, 0));
             }
         }
     }
