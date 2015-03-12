@@ -42,10 +42,6 @@ public class LuieScript : PlayerInputV2 {
         {
             Throw();
         }
-
-        if (Controls == PlyControls.WASD)
-        {
-        }
     }
 
     void Throw()

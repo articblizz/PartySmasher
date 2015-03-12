@@ -23,15 +23,10 @@ public class PlayerMng : MonoBehaviour {
 	
 			if(state.IsConnected)
 			{
-				print("Connected " + index.ToString());
 				var plyScript = player.GetComponent<PlayerInputV2>();
 				plyScript.MyIndex = index;
 				plyScript.isUsingController = true;
 
-				//if(player.name == "Bob")
-				//{
-				//	player.GetComponent<BobScript>().gamepadState = state;
-				//}
 			}
 		}
 	

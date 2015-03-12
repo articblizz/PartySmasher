@@ -12,15 +12,22 @@ public enum forceMode
 public class BombScript : MonoBehaviour
 {
     public float BlowUpTimer = 5;
-
+    
     public float ExplosionForce = 10;
     public float ExplosionRadius = 10;
     public float UpwardForce = 1;
     public forceMode Force_Mode = forceMode.Impulse;
 
+    public GameObject explosionParticles;
+
+    MeshRenderer renderer;
+
+    bool haveExploded;
+
     void Start()
     {
-        GetComponent<MeshRenderer>().material.color = Color.gray;
+        renderer = GetComponent<MeshRenderer>();
+        renderer.material.color = Color.gray;
     }
 
 	void Throw (float[] array)
@@ -32,12 +39,16 @@ public class BombScript : MonoBehaviour
     {
         BlowUpTimer -= Time.deltaTime;
 
-        if (BlowUpTimer <= 0)
+        if (BlowUpTimer <= 0 && !haveExploded)
             Explode();
 	}
 
     void Explode()
     {
+        haveExploded = true;
+        renderer.enabled = false;
+
+
         Collider[] colliders = Physics.OverlapSphere(gameObject.GetComponent<Rigidbody>().position, ExplosionRadius);
         foreach (Collider col in colliders)
         {
@@ -50,8 +61,9 @@ public class BombScript : MonoBehaviour
 
             col.GetComponent<Rigidbody>().AddExplosionForce(ExplosionForce, gameObject.GetComponent<Rigidbody>().position, ExplosionRadius, UpwardForce, (ForceMode)Force_Mode);
 
-            //Debug.Log("BOOM");
-            DestroyObject(gameObject);
+            explosionParticles.SetActive(true);
+            GetComponent<TrailRenderer>().enabled = false;
+            Destroy(gameObject, 1);
         }
     }
 

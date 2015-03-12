@@ -13,7 +13,6 @@ public class PlayerInputV2 : MonoBehaviour {
 
     [Header("Player Input Attributes")]
     public float Speed = 5;
-    public float KnockbackForce = 100;
     public float Health = 100;
 
     public PlyInput inputType;
@@ -41,10 +40,11 @@ public class PlayerInputV2 : MonoBehaviour {
     float direction = 0;
 
     public ParticleSystem hitParticles;
+
+    // immortal, not in use atm
     bool immortal = false;
     float immortalTimer;
     public float ImmortalTime;
-
 
     Canvas uiCanvas;
 
